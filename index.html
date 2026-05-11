@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI 设计海报工作站｜活动主视觉·排版·素材</title>
+  <meta name="description" content="面向设计师的 AI 海报工作站：活动主视觉、海报排版、字体与素材库、出图与后期工具一站式入口。支持分类、搜索、收藏、最近使用、推荐与海报提示词；纯前端单页可直接部署。" />
+  <meta property="og:title" content="AI 设计海报工作站" />
+  <meta property="og:description" content="活动主视觉、海报排版、字体与素材库、出图与后期工具一站式入口。支持分类、搜索、收藏、最近使用、推荐与海报提示词。" />
+  <meta property="og:type" content="website" />
+  <style>
+    :root{
+      --bg0:#070816;
+      --bg1:#0B1025;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.08);
+      --line:rgba(148,163,184,.16);
+      --text:#EAF1FF;
+      --muted:rgba(226,232,240,.72);
+      --shadow: 0 22px 80px rgba(0,0,0,.38);
+      --radius:20px;
+      --pink:#fb7185;
+      --cyan:#22d3ee;
+      --lime:#a3e635;
+      --violet:#a78bfa;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      line-height:1.55;
+      background:
+        radial-gradient(900px 520px at 10% 10%, rgba(34,211,238,.18), transparent 62%),
+        radial-gradient(760px 440px at 92% 8%, rgba(251,113,133,.14), transparent 60%),
+        radial-gradient(820px 520px at 40% 96%, rgba(167,139,250,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+    }
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
+    .wrap{max-width:1220px;margin:0 auto;padding:14px}
+
+    .top{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(7,8,22,.80), rgba(7,8,22,.54));
+      border-bottom: 1px solid rgba(148,163,184,.14);
+    }
+    .top-inner{
+      display:flex;align-items:center;gap:12px;justify-content:space-between;
+      padding:12px 18px;max-width:1220px;margin:0 auto;
+    }
+    .brand{display:flex;align-items:center;gap:10px;min-width:300px}
+    .mark{
+      width:38px;height:38px;border-radius:16px;
+      background:
+        radial-gradient(12px 12px at 30% 28%, rgba(255,255,255,.30), transparent 60%),
+        linear-gradient(135deg, rgba(34,211,238,1), rgba(251,113,133,.92));
+      box-shadow: 0 18px 38px rgba(34,211,238,.16);
+    }
+    .brand-text{display:flex;flex-direction:column;line-height:1.1}
+    .brand-title{font-weight:980;letter-spacing:.2px}
+    .brand-sub{font-size:12px;color:rgba(226,232,240,.72);margin-top:2px}
+    .nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;flex:1;min-width:0}
+    .nav a{
+      font-size:12.5px;
+      color: rgba(226,232,240,.86);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.16);
+      background: rgba(255,255,255,.06);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .nav a:hover{transform: translateY(-1px); border-color: rgba(34,211,238,.40); background: rgba(255,255,255,.09)}
+    .actions{display:flex;align-items:center;gap:10px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border:1px solid rgba(148,163,184,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(226,232,240,.92);
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(251,113,133,.34); background: rgba(255,255,255,.09)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(34,211,238,1), rgba(251,113,133,.98));
+      border-color: rgba(34,211,238,.46);
+      color:#071018;
+      font-weight:850;
+    }
+    .btn.ghost{background:transparent}
+
+    .hero{
+      border-radius: 26px;
+      margin-top:12px;
+      background:
+        radial-gradient(860px 420px at 12% 24%, rgba(34,211,238,.44), transparent 56%),
+        radial-gradient(760px 380px at 86% 16%, rgba(251,113,133,.26), transparent 58%),
+        radial-gradient(520px 300px at 40% 86%, rgba(167,139,250,.16), transparent 60%),
+        linear-gradient(135deg, rgba(16,18,37,1), rgba(7,8,22,1));
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(148,163,184,.14);
+      padding: 16px 12px 18px;
+    }
+    .hero-inner{max-width: 1040px; margin: 0 auto; text-align:center}
+    .hero-title{font-size:22px; letter-spacing:.2px; margin:0; font-weight:980; color: rgba(255,255,255,.96)}
+    .hero-sub{margin:8px 0 0;color: rgba(226,232,240,.80);font-size:12.5px;line-height:1.75}
+    .searchbar{
+      margin: 12px auto 0;
+      display:flex;align-items:center;gap:10px;
+      width: min(860px, 100%);
+      padding: 12px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(148,163,184,.14);
+      box-shadow: 0 18px 60px rgba(0,0,0,.28);
+    }
+    .searchbar svg{opacity:.92;color:rgba(226,232,240,.90)}
+    .searchbar input{flex:1;border:0;outline:0;background:transparent;color: rgba(255,255,255,.94);font-size: 14px}
+    .searchbar input::placeholder{color: rgba(226,232,240,.70)}
+    .statrow{
+      margin: 12px auto 0;
+      width: min(940px, 100%);
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(148,163,184,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(226,232,240,.86);
+      font-size:12px;
+      user-select:none;
+    }
+    .chip b{color: rgba(255,255,255,.96)}
+    .chip i{font-style:normal;color: rgba(34,211,238,.96)}
+    .quicklinks{margin: 10px auto 0;width: min(980px, 100%);display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .quicklinks a{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(148,163,184,.14);
+      color: rgba(226,232,240,.86);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .quicklinks a:hover{transform: translateY(-1px); border-color: rgba(163,230,53,.40); background: rgba(255,255,255,.09)}
+    .quick-tools{
+      margin: 12px auto 0;
+      width: min(980px, 100%);
+      display:grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap:10px;
+    }
+    .quick-tool{
+      border: 1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      border-radius: 16px;
+      padding: 10px 10px 12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height: 74px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .quick-tool:hover{transform: translateY(-2px); border-color: rgba(34,211,238,.34); background: rgba(255,255,255,.08); box-shadow: 0 14px 30px rgba(0,0,0,.22)}
+    .qt-ico{
+      width: 34px; height: 34px;
+      border-radius: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(135deg, rgba(34,211,238,.18), rgba(251,113,133,.12));
+      color: rgba(255,255,255,.94);
+      overflow:hidden;
+    }
+    .qt-name{font-size:12px; color: rgba(226,232,240,.84); text-align:center; line-height:1.2}
+
+    .panel{background: rgba(255,255,255,.06);border: 1px solid rgba(148,163,184,.14);border-radius: var(--radius);box-shadow: var(--shadow)}
+    .panel.pad{padding:14px}
+    .anchor{scroll-margin-top: 92px}
+    .recommend{
+      margin-top: 12px;
+      border-radius: 22px;
+      overflow:hidden
+    }
+    .recommend-head{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding: 10px 12px;border-bottom: 1px solid rgba(148,163,184,.12);
+      color: rgba(226,232,240,.84);font-size:12.5px;background: rgba(255,255,255,.06)
+    }
+    .recommend-left{display:flex;flex-direction:column;gap:6px;min-width:0}
+    .recommend-tabs{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .seg{
+      padding:6px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);color: rgba(226,232,240,.84);
+      font-size:12px;cursor:pointer;user-select:none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .seg:hover{transform: translateY(-1px); border-color: rgba(251,113,133,.40); background: rgba(255,255,255,.09)}
+    .seg.active{background: rgba(34,211,238,.16); border-color: rgba(34,211,238,.30); color: rgba(255,255,255,.94)}
+    .recommend-desc{font-size:12px;color: rgba(226,232,240,.70);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .recommend-body{padding: 10px 12px 12px;background: rgba(255,255,255,.06)}
+    .rec-grid{display:grid;grid-template-columns: repeat(4, minmax(0, 1fr));gap:14px}
+    .rec-card{
+      border: 1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      border-radius: 16px;
+      padding: 14px;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      min-height: 94px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .rec-card:hover{transform: translateY(-2px); border-color: rgba(163,230,53,.30); background: rgba(255,255,255,.08); box-shadow: 0 14px 30px rgba(0,0,0,.22)}
+    .rec-icon{
+      width:46px;height:46px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+      background: linear-gradient(135deg, rgba(34,211,238,.18), rgba(251,113,133,.12));
+      color: rgba(255,255,255,.94);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .rec-icon img{width:100%;height:100%;object-fit:cover;display:block}
+    .rec-icon svg{width:22px;height:22px}
+    .rec-text{min-width:0;display:flex;flex-direction:column;gap:4px}
+    .rec-name{font-weight:980;font-size:13px;color: rgba(255,255,255,.92);line-height:1.2}
+    .rec-sub{font-size:12px;color: rgba(226,232,240,.74);white-space:normal;overflow:visible;line-height:1.35}
+    .rec-hint{margin-top:10px;font-size:12px;color: rgba(226,232,240,.72)}
+
+    .layout{display:grid;grid-template-columns: 1fr 360px;gap:18px;margin-top:12px}
+    .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling: touch;gap:8px;padding:10px 12px;border-top:1px solid rgba(148,163,184,.14)}
+    .tab{
+      padding:8px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);color: rgba(226,232,240,.86);
+      font-size:12px;white-space:nowrap;cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .tab:hover{transform: translateY(-1px); border-color: rgba(34,211,238,.40); background: rgba(255,255,255,.09)}
+    .tab.active{background: rgba(251,113,133,.14); border-color: rgba(251,113,133,.28); color: rgba(255,255,255,.94)}
+    .cat-quick{display:flex;gap:10px;padding: 10px 12px 12px;border-top: 1px solid rgba(148,163,184,.14);overflow-x:auto;-webkit-overflow-scrolling: touch}
+    .cat-btn{
+      border: 1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      border-radius: 16px;
+      padding: 9px 10px 10px;
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+      cursor:pointer;user-select:none;min-width: 92px;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .cat-btn:hover{transform: translateY(-2px); border-color: rgba(34,211,238,.36); background: rgba(255,255,255,.08); box-shadow: 0 14px 30px rgba(0,0,0,.22)}
+    .cat-btn.active{border-color: rgba(163,230,53,.30); box-shadow: 0 14px 30px rgba(163,230,53,.14)}
+    .cat-ico{
+      width: 34px; height: 34px;border-radius: 14px;display:flex;align-items:center;justify-content:center;
+      background: linear-gradient(135deg, rgba(34,211,238,.18), rgba(251,113,133,.12));
+      color: rgba(255,255,255,.94)
+    }
+    .cat-name{font-size:12px; color: rgba(226,232,240,.84); text-align:center; line-height:1.2}
+    .grid{display:grid;grid-template-columns: repeat(3, minmax(0, 1fr));gap:12px;padding:14px 16px 16px;border-top:1px solid rgba(148,163,184,.14)}
+    .card{
+      border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height: 160px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .card:hover{transform: translateY(-2px); border-color: rgba(34,211,238,.36); background: rgba(255,255,255,.08)}
+    .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .card-title{font-weight:980;font-size:13.5px;margin:0}
+    .card-desc{margin:0;color: rgba(226,232,240,.72);font-size:12.5px;line-height:1.65}
+    .tags{display:flex;flex-wrap:wrap;gap:6px}
+    .tag{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(226,232,240,.78);
+    }
+    .card-actions{display:flex;align-items:center;gap:8px;margin-top:auto;flex-wrap:wrap}
+    .mini{
+      padding:8px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);color: rgba(226,232,240,.90);
+      font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .mini:hover{transform: translateY(-1px); border-color: rgba(251,113,133,.30); background: rgba(255,255,255,.09)}
+    .mini.primary{background: rgba(34,211,238,.16); border-color: rgba(34,211,238,.30); color: rgba(255,255,255,.96)}
+    .star{
+      width:34px;height:34px;border-radius:999px;border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+      transition: border-color .12s ease, background .12s ease;
+    }
+    .star[aria-pressed="true"]{border-color: rgba(163,230,53,.30); background: rgba(163,230,53,.12)}
+    .inline-ad{grid-column: 1 / -1; border-radius: var(--radius); overflow:hidden}
+    .ad-slot{
+      border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      padding:12px;
+    }
+    .badge{font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid rgba(34,211,238,.30);background: rgba(34,211,238,.18);color: rgba(255,255,255,.94)}
+    .muted{color: rgba(226,232,240,.72)}
+    .divider{width:1px;height:12px;background: rgba(148,163,184,.16)}
+    .foot{margin:18px 0 30px;padding:14px 16px;border-top:1px solid rgba(148,163,184,.14);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .foot a{color:rgba(226,232,240,.80)}
+    .foot a:hover{color:rgba(255,255,255,.96)}
+    .rightcol{display:flex;flex-direction:column;gap:12px}
+
+    .sections{display:grid;gap:12px;margin-top:14px}
+    .section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .section-title{margin:0;font-size:14px;font-weight:980}
+    .section-sub{margin:4px 0 0;color: rgba(226,232,240,.72);font-size:12.5px;line-height:1.75}
+    .tmpl-grid{margin-top: 12px;display:grid;grid-template-columns: repeat(3, minmax(0, 1fr));gap:12px}
+    .tmpl-card{
+      border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      border-radius: 18px;
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height: 170px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .tmpl-card:hover{transform: translateY(-2px); border-color: rgba(167,139,250,.34); background: rgba(255,255,255,.08)}
+    .tmpl-title{margin:0;font-weight:980;font-size:13px}
+    .tmpl-desc{margin:0;color: rgba(226,232,240,.74);font-size:12.5px;line-height:1.65}
+    .tmpl-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+    .note-grid{margin-top:12px;display:grid;grid-template-columns: repeat(2, minmax(0, 1fr));gap:12px}
+    .note{
+      border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.06);
+      border-radius: 18px;
+      padding: 12px;
+      line-height:1.7;
+      color: rgba(226,232,240,.86);
+    }
+    .note b{color: rgba(255,255,255,.96)}
+    .note ul{margin:8px 0 0;padding-left:18px}
+    .note li{margin:6px 0}
+    @media (max-width: 720px){.note-grid{grid-template-columns: 1fr}}
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      background: rgba(2,6,23,.84);
+      border: 1px solid rgba(148,163,184,.16);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.94);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index: 60;
+      max-width: calc(100vw - 24px);
+      text-align:center
+    }
+    .toast.show{opacity:1; transform: translateX(-50%) translateY(-6px)}
+    .float-cta{position: fixed;right: 18px;bottom: 18px;z-index: 55;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+    .fab{
+      border-radius: 999px;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, rgba(34,211,238,1), rgba(251,113,133,.98));
+      color: #071018;
+      border: 1px solid rgba(34,211,238,.48);
+      box-shadow: 0 18px 44px rgba(34,211,238,.14);
+      cursor:pointer;
+      font-size: 13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      font-weight:850;
+      transition: transform .12s ease;
+    }
+    .fab:hover{transform: translateY(-1px)}
+    .fab.secondary{
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      border-color: rgba(148,163,184,.16);
+      box-shadow: var(--shadow);
+      font-weight:700;
+    }
+    @media (max-width: 980px){.layout{grid-template-columns: 1fr}.rightcol{order:-1}.brand{min-width:0}.nav{justify-content:flex-start}}
+    @media (max-width: 980px){.quick-tools{grid-template-columns: repeat(4, minmax(0, 1fr))}.rec-grid{grid-template-columns: repeat(2, minmax(0, 1fr))}.tmpl-grid{grid-template-columns: repeat(2, minmax(0, 1fr))}}
+    @media (max-width: 860px){.grid{grid-template-columns: repeat(2, minmax(0, 1fr))}}
+    @media (max-width: 720px){.rec-grid{grid-template-columns: repeat(1, minmax(0, 1fr))}}
+    @media (max-width: 560px){.top-inner{flex-wrap:wrap}.brand{width:100%}.nav{width:100%;justify-content:flex-start}.actions{width:100%;justify-content:flex-end}.grid{grid-template-columns: 1fr}.float-cta{right: 12px; bottom: 12px}.hero-title{font-size:22px}.quick-tools{grid-template-columns: repeat(2, minmax(0, 1fr))}.tmpl-grid{grid-template-columns: 1fr}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="brand-text">
+          <div class="brand-title">AI 设计海报工作站</div>
+          <div class="brand-sub">活动主视觉 · 海报排版 · 字体素材 · 出图后期</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="页面导航">
+        <a href="#tools" data-event="des2_nav_tools">工具库</a>
+        <a href="#des2-prompts" data-event="des2_nav_prompts">海报提示词</a>
+        <a href="#des2-sop" data-event="des2_nav_sop">出图SOP</a>
+        <a href="#des2-assets" data-event="des2_nav_assets">素材清单</a>
+        <a href="#des2-layouts" data-event="des2_nav_layouts">版式库</a>
+        <a href="#des2-cheat" data-event="des2_nav_cheat">排版小抄</a>
+        <a href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="des2_nav_1bgp">部署推荐</a>
+      </nav>
+
+      <div class="actions">
+        <button class="btn ghost" id="showFavs" data-event="des2_nav_favs" type="button">仅看收藏</button>
+        <button class="btn primary" id="submitTool" data-event="des2_nav_host" type="button">部署选型</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-label="搜索区域">
+      <div class="hero-inner">
+        <h1 class="hero-title">海报主视觉 · AI 设计工作站</h1>
+        <div class="hero-sub">从活动主视觉到多尺寸适配：主题、排版、字体、素材、出图与后期一条龙。</div>
+
+        <div class="searchbar" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" opacity=".95"/>
+            <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".95"/>
+          </svg>
+          <input id="q" type="text" autocomplete="off" placeholder="搜索：主视觉 / 海报排版 / 字体 / 质感 / 霓虹 / 颗粒 …" />
+        </div>
+
+        <div class="statrow" aria-label="统计信息">
+          <span class="chip">当前分类：<b id="activeCat">全部</b></span>
+          <span class="chip">匹配：<b id="count">0</b></span>
+          <span class="chip">分类：<b id="catCount">0</b></span>
+          <span class="chip">工具：<b id="toolCount">0</b></span>
+          <span class="chip">收藏：<b id="favCount">0</b> <i>★</i></span>
+        </div>
+
+        <div class="quicklinks" aria-label="快捷入口">
+          <a href="#des2-prompts" data-event="des2_hero_prompts">海报提示词</a>
+          <a href="#des2-sop" data-event="des2_hero_sop">出图SOP</a>
+          <a href="#des2-assets" data-event="des2_hero_assets">素材清单</a>
+          <a href="#des2-layouts" data-event="des2_hero_layouts">版式库</a>
+          <a href="#des2-cheat" data-event="des2_hero_cheat">排版小抄</a>
+          <a href="#tools" data-event="des2_hero_tools">工具库</a>
+          <a href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="des2_hero_1bgp">1bgp 服务器</a>
+        </div>
+
+        <div class="quick-tools" id="quickTools" aria-label="快捷任务"></div>
+      </div>
+    </section>
+
+    <section class="panel recommend" aria-label="推荐与最近">
+      <div class="recommend-head">
+        <div class="recommend-left">
+          <div class="recommend-tabs" role="tablist" aria-label="推荐切换">
+            <button class="seg active" type="button" data-rec="recommend" data-event="des2_rec_tab_recommend" aria-selected="true">高频入口</button>
+            <button class="seg" type="button" data-rec="recent" data-event="des2_rec_tab_recent" aria-selected="false">最近打开</button>
+          </div>
+          <div class="recommend-desc" id="recommendDesc">偏海报：主视觉/字体/素材/后期/排版。</div>
+        </div>
+        <span class="badge">精选</span>
+      </div>
+      <div class="recommend-body">
+        <div class="rec-grid" id="recommendGrid" aria-label="推荐工具列表"></div>
+        <div class="rec-hint" id="recommendHint" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="layout anchor" id="tools">
+      <section class="panel" aria-label="工具列表">
+        <div class="tabs" id="tabs" role="tablist" aria-label="分类筛选"></div>
+        <div class="cat-quick" id="catQuick" aria-label="分类快捷"></div>
+        <div class="grid" id="grid" aria-live="polite"></div>
+
+        <div class="foot">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span class="muted">© <span id="year"></span> AI 设计海报工作站</span>
+            <span class="divider" aria-hidden="true"></span>
+            <a href="#" id="openDisclaimer" data-event="des2_open_disclaimer">使用说明</a>
+            <span class="divider" aria-hidden="true"></span>
+            <a href="#" id="openPrivacy" data-event="des2_open_privacy">隐私说明</a>
+          </div>
+          <div class="muted">外链仅供参考，请自行甄别风险与版权授权。</div>
+        </div>
+      </section>
+
+      <aside class="rightcol" aria-label="侧栏">
+        <section class="panel pad">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div>
+              <div style="font-weight:980">1bgp.com 部署推荐</div>
+              <div class="muted" style="font-size:12px;margin-top:4px">适合部署素材站、下载页、作品集与工作流</div>
+            </div>
+            <span class="badge">合作</span>
+          </div>
+          <div class="muted" style="font-size:12.5px;margin-top:10px;line-height:1.7">
+            适合：素材下载页、活动页、作品集与自动化任务。云/物理机可选，按需扩容，快速上线。
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <a class="mini primary" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="des2_cta_1bgp_primary">了解方案</a>
+            <a class="mini" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="des2_cta_1bgp_secondary">进入官网</a>
+          </div>
+        </section>
+
+        <section class="panel pad">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div>
+              <div style="font-weight:980">海报结构建议</div>
+              <div class="muted" style="font-size:12px;margin-top:4px">标题层级 → 视觉焦点 → 信息区</div>
+            </div>
+            <span class="badge">建议</span>
+          </div>
+          <div class="muted" style="font-size:12.5px;margin-top:10px;line-height:1.7">
+            标题做“结论句”，副标题补信息；焦点只保留一个主物体；信息区统一栅格与间距，最后做多尺寸适配。
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <section class="sections">
+      <section class="panel pad anchor" id="des2-prompts" aria-label="海报提示词">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">海报提示词（主视觉/排版）</h2>
+            <p class="section-sub">重点写：主题、构图、字体风格、材质、光线、颗粒与留白，方便后期排版。</p>
+          </div>
+        </div>
+        <div class="tmpl-grid" id="tmplGrid" aria-label="提示词卡片"></div>
+      </section>
+
+      <section class="panel pad anchor" id="des2-sop" aria-label="出图SOP">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">出图SOP（可复用）</h2>
+            <p class="section-sub">从“探索”到“定稿”：把流程做成固定步骤，减少返工。</p>
+          </div>
+        </div>
+        <div class="tmpl-grid" id="sopGrid" aria-label="SOP卡片"></div>
+      </section>
+
+      <section class="panel pad anchor" id="des2-assets" aria-label="素材清单">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">素材清单（下载与导出）</h2>
+            <p class="section-sub">用清单把素材与导出做“可控”：版权、格式、分辨率、压缩与命名规范。</p>
+          </div>
+        </div>
+        <div class="tmpl-grid" id="assetGrid" aria-label="素材清单卡片"></div>
+      </section>
+
+      <section class="panel pad anchor" id="des2-layouts" aria-label="版式库">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">版式库（结构参考）</h2>
+            <p class="section-sub">把版式当成组件：固定结构，替换内容与风格，快速出多套海报。</p>
+          </div>
+        </div>
+        <div class="tmpl-grid" id="layoutGrid" aria-label="版式库卡片"></div>
+      </section>
+
+      <section class="panel pad anchor" id="des2-cheat" aria-label="排版小抄">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">排版小抄（检查清单）</h2>
+            <p class="section-sub">做完海报别急着交付：用这份清单快速检查可读性、层级、对齐与导出规范。</p>
+          </div>
+        </div>
+        <div class="note-grid" aria-label="排版小抄内容">
+          <div class="note">
+            <b>信息层级</b>
+            <ul>
+              <li>标题必须像结论句，12字以内更稳</li>
+              <li>副标题只补充信息，不抢主标题</li>
+              <li>卖点最多3条，每条不超过12字</li>
+              <li>时间/地点/报名方式集中到同一区域</li>
+              <li>二维码附近留足空白，避免干扰纹理</li>
+              <li>CTA 不要太长，8字以内更清晰</li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>对齐与栅格</b>
+            <ul>
+              <li>统一左对齐或居中，不要混用</li>
+              <li>同一层级字号/行距/字重保持一致</li>
+              <li>元素间距用固定倍数（8/12/16）</li>
+              <li>信息区用栅格（2-3列）更清楚</li>
+              <li>不要用“眼睛对齐”，用网格对齐</li>
+              <li>边距保持一致，四周留白统一</li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>色彩与对比</b>
+            <ul>
+              <li>主色不要超过2个，辅色用于强调</li>
+              <li>文本与背景对比不足会“糊”</li>
+              <li>高饱和背景时，信息区加半透明底</li>
+              <li>渐变要服务氛围，不要抢信息</li>
+              <li>同一系列海报保持同一色板</li>
+              <li>小字不要用过浅的灰或彩色</li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>导出与交付</b>
+            <ul>
+              <li>按平台尺寸导出：1:1、4:5、9:16</li>
+              <li>发布前压缩（TinyPNG/Squoosh）</li>
+              <li>命名包含：主题_尺寸_版本_日期</li>
+              <li>保留源文件与字体/素材授权记录</li>
+              <li>缩小到手机屏幕检查可读性</li>
+              <li>二维码测试：三台手机都能扫</li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>主视觉与质感</b>
+            <ul>
+              <li>一个画面只保留一个“焦点物体”</li>
+              <li>背景尽量干净，留白给排版</li>
+              <li>纹理/颗粒统一，不要一张多种颗粒</li>
+              <li>金属/玻璃质感要有明确高光与反射</li>
+              <li>人物图注意肤色与噪点，避免脏</li>
+              <li>缩小看：主体轮廓要清楚</li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>标题字与可读性</b>
+            <ul>
+              <li>标题字先保证可读，再追求风格</li>
+              <li>标题与副标题不要同字重</li>
+              <li>行距过小会压迫，过大显松散</li>
+              <li>中英文混排注意基线与字间距</li>
+              <li>高对比背景时，标题可加描边/投影</li>
+              <li>同一系列固定一套字体系</li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>审核点（最后5分钟）</b>
+            <ul>
+              <li>缩小到手机屏幕：标题仍清晰可读</li>
+              <li>放大200%：边缘无明显锯齿/脏边</li>
+              <li>对齐检查：同列元素基线一致</li>
+              <li>色彩检查：主色不抢信息区</li>
+              <li>二维码测试：网络差也能扫</li>
+              <li>敏感信息：时间/价格/地址无误</li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>多尺寸适配</b>
+            <ul>
+              <li>结构固定：标题区/焦点/信息区</li>
+              <li>竖版优先：9:16 为主，横版做补充</li>
+              <li>裁切安全区：关键信息不靠边</li>
+              <li>信息密度：竖版可多，方图要少</li>
+              <li>同系列统一：色板/字体/纹理一致</li>
+              <li>导出命名：尺寸写清楚避免混用</li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>交付沟通</b>
+            <ul>
+              <li>先给一张“方向稿”对齐审美</li>
+              <li>再给一张“可用稿”对齐信息</li>
+              <li>最后交付“多尺寸成品”与模板</li>
+              <li>把改动写成清单：每条可验收</li>
+              <li>明确范围：本轮修改到哪一步</li>
+              <li>附授权记录：素材/字体/生成条款</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="float-cta">
+    <a class="fab" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="des2_fab_1bgp">打开 1bgp 官网</a>
+    <button class="fab secondary" id="fabTop" data-event="des2_fab_top" type="button">回到顶部</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const LS_KEY = "aidesign2:favs";
+    const REC_KEY = "aidesign2:recent";
+
+    const tools = [
+      { name: "Midjourney", desc: "高质量主视觉生成，适合活动KV与风格探索。", url: "https://www.midjourney.com", cat: "主视觉/出图", tags: ["KV","风格","主视觉"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.midjourney.com&v=11" },
+      { name: "Ideogram", desc: "偏文字排版的出图，适合标题字与海报标语。", url: "https://ideogram.ai", cat: "主视觉/出图", tags: ["文字","海报","标语"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fideogram.ai&v=11" },
+      { name: "DALL·E", desc: "图像生成与编辑（OpenAI）。", url: "https://openai.com/dall-e", cat: "主视觉/出图", tags: ["生成","编辑","构图"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fopenai.com%2Fdall-e&v=11" },
+      { name: "Stable Diffusion WebUI", desc: "可控性强的图像生成（自部署/本地）。", url: "https://github.com/AUTOMATIC1111/stable-diffusion-webui", cat: "主视觉/出图", tags: ["本地","可控","开源"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fgithub.com%2FAUTOMATIC1111%2Fstable-diffusion-webui&v=11" },
+      { name: "ComfyUI", desc: "节点式工作流，适合可复用出图与批量迭代。", url: "https://github.com/comfyanonymous/ComfyUI", cat: "主视觉/出图", tags: ["节点","批量","工作流"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fgithub.com%2Fcomfyanonymous%2FComfyUI&v=11" },
+      { name: "Leonardo AI", desc: "多风格出图与素材生成，适合KV氛围探索。", url: "https://leonardo.ai", cat: "主视觉/出图", tags: ["风格","素材","生成"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fleonardo.ai&v=11" },
+      { name: "Playground AI", desc: "在线出图与风格试验，适合快速探索方向。", url: "https://playgroundai.com", cat: "主视觉/出图", tags: ["在线","试验","方向"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fplaygroundai.com&v=11" },
+      { name: "Lexica", desc: "提示词与风格案例库，适合找参考与复现。", url: "https://lexica.art", cat: "主视觉/出图", tags: ["提示词","案例","参考"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Flexica.art&v=11" },
+      { name: "Civitai", desc: "模型与Lora资源库（SD生态），适合风格定制。", url: "https://civitai.com", cat: "主视觉/出图", tags: ["模型","Lora","风格"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fcivitai.com&v=11" },
+
+      { name: "Adobe Photoshop", desc: "后期合成、质感与精修，适合海报定稿。", url: "https://www.adobe.com/products/photoshop.html", cat: "后期/合成", tags: ["合成","精修","后期"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.adobe.com%2Fproducts%2Fphotoshop.html&v=11" },
+      { name: "Photopea", desc: "在线PSD编辑器，适合轻量修图与导出。", url: "https://www.photopea.com", cat: "后期/合成", tags: ["PSD","在线","修图"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.photopea.com&v=11" },
+      { name: "Pixlr", desc: "在线修图与快速处理工具。", url: "https://pixlr.com", cat: "后期/合成", tags: ["在线","修图","处理"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fpixlr.com&v=11" },
+      { name: "Remove.bg", desc: "一键去背景抠图，适合人物/物体分离。", url: "https://www.remove.bg", cat: "后期/合成", tags: ["抠图","去背景","快"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.remove.bg&v=11" },
+      { name: "Upscale.media", desc: "在线放大修复，适合低分辨率素材救急。", url: "https://www.upscale.media", cat: "后期/合成", tags: ["放大","修复","在线"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.upscale.media&v=11" },
+      { name: "Let's Enhance", desc: "图片放大与增强，适合大尺寸海报底图。", url: "https://letsenhance.io", cat: "后期/合成", tags: ["增强","放大","海报"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fletsenhance.io&v=11" },
+      { name: "Squoosh", desc: "图片压缩与格式转换（WebP/AVIF）。", url: "https://squoosh.app", cat: "后期/合成", tags: ["压缩","格式","导出"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fsquoosh.app&v=11" },
+      { name: "TinyPNG", desc: "PNG/JPG 压缩工具，适合发布前减体积。", url: "https://tinypng.com", cat: "后期/合成", tags: ["压缩","PNG","发布"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Ftinypng.com&v=11" },
+
+      { name: "Canva", desc: "模板化排版，适合多尺寸海报快速适配。", url: "https://www.canva.com", cat: "排版/布局", tags: ["模板","排版","多尺寸"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.canva.com&v=11" },
+      { name: "Figma", desc: "排版与组件化设计，适合海报系统与多人协作。", url: "https://www.figma.com", cat: "排版/布局", tags: ["组件","协作","系统"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.figma.com&v=11" },
+      { name: "Kittl", desc: "版式/字体风格强，适合主标题与版式探索。", url: "https://www.kittl.com", cat: "排版/布局", tags: ["字体","版式","模板"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.kittl.com&v=11" },
+      { name: "Adobe Illustrator", desc: "矢量排版与图形，适合字标与图形语言。", url: "https://www.adobe.com/products/illustrator.html", cat: "排版/布局", tags: ["矢量","排版","图形"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.adobe.com%2Fproducts%2Fillustrator.html&v=11" },
+      { name: "Figma Community", desc: "Figma 社区资源，适合找版式/组件/海报模板。", url: "https://www.figma.com/community", cat: "排版/布局", tags: ["社区","模板","资源"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.figma.com%2Fcommunity&v=11" },
+      { name: "Slidesgo", desc: "演示模板库，可借鉴排版结构与版式节奏。", url: "https://slidesgo.com", cat: "排版/布局", tags: ["模板","结构","参考"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fslidesgo.com&v=11" },
+
+      { name: "Coolors", desc: "配色生成，适合活动主题色探索。", url: "https://coolors.co", cat: "字体/配色", tags: ["配色","色板","主题"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fcoolors.co&v=11" },
+      { name: "Adobe Color", desc: "色轮与规则配色，适合主题色体系。", url: "https://color.adobe.com", cat: "字体/配色", tags: ["色轮","规则","主题"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fcolor.adobe.com&v=11" },
+      { name: "Google Fonts", desc: "免费字体库，适合标题/正文选择。", url: "https://fonts.google.com", cat: "字体/配色", tags: ["字体","免费","网页"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Ffonts.google.com&v=11" },
+      { name: "Fontshare", desc: "免费字体与搭配展示。", url: "https://www.fontshare.com", cat: "字体/配色", tags: ["字体","搭配","免费"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.fontshare.com&v=11" },
+      { name: "Gradient Hunt", desc: "渐变配色库，适合霓虹/科技风海报。", url: "https://gradienthunt.com", cat: "字体/配色", tags: ["渐变","配色","霓虹"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fgradienthunt.com&v=11" },
+      { name: "Typewolf", desc: "字体搭配与案例推荐，适合标题/正文选择。", url: "https://www.typewolf.com", cat: "字体/配色", tags: ["字体","搭配","案例"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.typewolf.com&v=11" },
+
+      { name: "Unsplash", desc: "高质量免费图片素材库。", url: "https://unsplash.com", cat: "素材/图库", tags: ["图片","免费","素材"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Funsplash.com&v=11" },
+      { name: "Pexels", desc: "免费图片/视频素材库。", url: "https://www.pexels.com", cat: "素材/图库", tags: ["图片","视频","免费"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.pexels.com&v=11" },
+      { name: "Freepik", desc: "矢量/PSD/素材库，适合海报元素与贴图。", url: "https://www.freepik.com", cat: "素材/图库", tags: ["矢量","PSD","贴图"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.freepik.com&v=11" },
+      { name: "Flaticon", desc: "图标素材库，适合信息区图标与小元素。", url: "https://www.flaticon.com", cat: "素材/图库", tags: ["图标","素材","元素"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.flaticon.com&v=11" },
+      { name: "Iconify", desc: "统一图标集合与搜索。", url: "https://icon-sets.iconify.design", cat: "素材/图库", tags: ["图标","集合","搜索"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Ficon-sets.iconify.design&v=11" },
+      { name: "SVG Repo", desc: "SVG图标与插画资源库，适合海报元素。", url: "https://www.svgrepo.com", cat: "素材/图库", tags: ["SVG","图标","插画"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.svgrepo.com&v=11" },
+      { name: "Haikei", desc: "生成波浪/网格/噪点背景SVG，适合海报底纹。", url: "https://haikei.app", cat: "素材/图库", tags: ["背景","SVG","底纹"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fhaikei.app&v=11" },
+      { name: "BGJar", desc: "背景生成器（SVG），适合快速做底图。", url: "https://bgjar.com", cat: "素材/图库", tags: ["背景","SVG","生成"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fbgjar.com&v=11" },
+      { name: "LottieFiles", desc: "动效素材库（Lottie），适合活动页联动。", url: "https://lottiefiles.com", cat: "素材/图库", tags: ["动效","Lottie","素材"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Flottiefiles.com&v=11" },
+      { name: "Icons8", desc: "图标/插画/照片资源库，适合海报信息区元素。", url: "https://icons8.com", cat: "素材/图库", tags: ["图标","插画","资源"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Ficons8.com&v=11" },
+      { name: "The Noun Project", desc: "图标资源库，适合信息区图形表达。", url: "https://thenounproject.com", cat: "素材/图库", tags: ["图标","信息","表达"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fthenounproject.com&v=11" },
+      { name: "Envato Elements", desc: "素材订阅库（模板/字体/贴图），适合活动物料。", url: "https://elements.envato.com", cat: "素材/图库", tags: ["模板","字体","贴图"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Felements.envato.com&v=11" },
+
+      { name: "Behance", desc: "平面/海报作品集平台，适合找风格与案例。", url: "https://www.behance.net", cat: "灵感/案例", tags: ["海报","案例","作品集"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.behance.net&v=11" },
+      { name: "Pinterest", desc: "灵感收集与情绪板，适合海报风格探索。", url: "https://www.pinterest.com", cat: "灵感/案例", tags: ["Moodboard","灵感","收集"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.pinterest.com&v=11" },
+      { name: "Dribbble", desc: "设计作品与灵感社区。", url: "https://dribbble.com", cat: "灵感/案例", tags: ["灵感","作品","社区"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fdribbble.com&v=11" },
+      { name: "Awwwards", desc: "优秀网页作品集，适合视觉语言参考。", url: "https://www.awwwards.com", cat: "灵感/案例", tags: ["网页","风格","优秀"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.awwwards.com&v=11" }
+    ];
+
+    const quickTools = [
+      { name: "做KV", q: "活动 主视觉 KV", cat: "主视觉/出图" },
+      { name: "做标题字", q: "标题字 海报 标语", cat: "主视觉/出图" },
+      { name: "做排版", q: "排版 版式 栅格", cat: "排版/布局" },
+      { name: "做后期", q: "合成 质感 颗粒", cat: "后期/合成" },
+      { name: "找字体", q: "字体 标题 正文", cat: "字体/配色" },
+      { name: "配色", q: "配色 霓虹 渐变", cat: "字体/配色" },
+      { name: "找素材", q: "素材 贴图 图标", cat: "素材/图库" },
+      { name: "找灵感", q: "海报 灵感 风格", cat: "灵感/案例" }
+    ];
+
+    const promptCards = [
+      {
+        title: "活动KV（主视觉）",
+        tags: ["KV","构图","光线"],
+        desc: "用“主题 + 焦点 + 材质 + 光线”稳定出图。",
+        text: `请为“<<<活动主题>>>”生成活动主视觉KV提示词，要求：\n- 主体：1个焦点物体（明确材质）\n- 背景：简洁、留白可排版\n- 光线：主光/辅光/轮廓光\n- 风格：<<<风格关键词>>>（如霓虹、金属、颗粒、赛博）\n- 输出：1) 中文描述 2) 英文提示词 3) 负面提示词 4) 建议尺寸（竖版/横版）`
+      },
+      {
+        title: "海报排版（信息区结构）",
+        tags: ["版式","栅格","层级"],
+        desc: "把文字信息写成可排版的结构。",
+        text: `请把以下活动信息整理成海报信息区结构，输出：\n- 标题（不超过12字）\n- 副标题（不超过24字）\n- 3条卖点（每条不超过12字）\n- 时间/地点/报名方式\n- CTA（不超过8字）\n并给出：字体层级（H1/H2/Body）、栅格建议与留白规则。\n活动信息：<<<在此粘贴>>>`
+      },
+      {
+        title: "风格一致（多尺寸适配）",
+        tags: ["一致性","多尺寸","系统"],
+        desc: "同一套海报适配 1:1 / 4:5 / 9:16。",
+        text: `请给出同一活动海报的多尺寸适配规则：\n- 结构固定：标题区/焦点/信息区\n- 可变：焦点比例、背景留白\n- 输出三套：1:1、4:5、9:16 的构图说明\n并给出可复用提示词模板（含变量位）。`
+      },
+      {
+        title: "质感关键词库（后期友好）",
+        tags: ["质感","颗粒","材质"],
+        desc: "出图时就写清材质与颗粒，后期更省事。",
+        text: `请输出一份海报“质感关键词库”，分组：\n- 材质：金属/玻璃/塑料/纸张/织物\n- 光效：霓虹/体积光/反射/漫反射\n- 纹理：颗粒/噪点/刮痕/纸纹\n- 色彩：渐变/互补/高对比\n每组给：10个关键词 + 2条示例提示词。`
+      },
+      {
+        title: "标题字（可读性优先）",
+        tags: ["标题字","可读性","风格"],
+        desc: "标题字要“像”但也要“读得清”。",
+        text: `请生成“<<<标题>>>”的标题字提示词，要求：\n- 可读性强（避免过度变形）\n- 风格：<<<风格>>>（如复古、霓虹、赛博、极简）\n- 提供：3个方向（每个方向给提示词+建议配色）\n- 提供：不建议的做法（3条）`
+      },
+      {
+        title: "海报文案（标题像结论）",
+        tags: ["文案","标题","卖点"],
+        desc: "把口号写成“结论句”，信息更清晰。",
+        text: `请为“<<<活动/产品>>>”输出海报文案，要求：\n- 标题：结论句（不超过12字）\n- 副标题：补充信息（不超过24字）\n- 卖点：3条（每条不超过12字）\n- CTA：不超过8字\n- 给出2种语气（年轻/高级）\n背景：<<<在此粘贴>>>`
+      },
+      {
+        title: "信息密度控制（留白优先）",
+        tags: ["留白","密度","可读性"],
+        desc: "减少信息堆叠，让海报“呼吸”。",
+        text: `请根据以下信息，给出海报信息密度控制建议：\n- 哪些信息必须出现\n- 哪些信息可以下沉到二维码落地页\n- 标题/副标题/信息区的比例建议\n- 留白与对比度建议\n信息：<<<在此粘贴>>>`
+      }
+    ];
+
+    const sopCards = [
+      {
+        title: "探索期（出10张）",
+        tags: ["探索","方向","风格"],
+        desc: "先广撒网，锁定3个方向。",
+        text: `步骤：\n1) 写清主题与人群\n2) 固定3个风格方向（每个方向3-4张）\n3) 每张只改一个变量（构图/材质/光线）\n输出：3个方向对比表（优缺点/适用场景）。`
+      },
+      {
+        title: "收敛期（定1张）",
+        tags: ["收敛","一致性","定稿"],
+        desc: "固定主图与版式，开始做细节。",
+        text: `步骤：\n1) 选定焦点物体与构图\n2) 固定色板与光线\n3) 做信息区栅格与层级\n4) 预留二维码/CTA位置\n输出：一张“可排版”的主视觉底图。`
+      },
+      {
+        title: "排版期（多尺寸）",
+        tags: ["排版","多尺寸","导出"],
+        desc: "同一套结构适配多端尺寸。",
+        text: `步骤：\n1) 定字体层级（H1/H2/Body）\n2) 做 1:1 / 4:5 / 9:16 三套\n3) 检查信息密度与留白\n4) 导出规范：命名/尺寸/格式\n输出：三套成品海报 + 可复用模板。`
+      },
+      {
+        title: "后期期（质感统一）",
+        tags: ["后期","质感","统一"],
+        desc: "统一颗粒、对比、锐化与色调。",
+        text: `步骤：\n1) 统一色调（曲线/色彩平衡）\n2) 加统一颗粒/噪点\n3) 统一锐化与边缘\n4) 检查可读性（缩小看）\n输出：一套风格一致的多尺寸海报。`
+      },
+      {
+        title: "交付期（命名与归档）",
+        tags: ["交付","命名","归档"],
+        desc: "让团队能复用，避免找不到文件。",
+        text: `步骤：\n1) 统一命名：项目_主题_尺寸_版本_日期\n2) 导出：可编辑源文件 + 发布图\n3) 归档：字体/素材授权说明\n4) 记录：变更点与版本说明\n输出：可交付文件夹结构与清单。`
+      }
+    ];
+
+    const assetCards = [
+      {
+        title: "版权与授权（先确认）",
+        tags: ["版权","授权","风险"],
+        desc: "素材不清楚授权，后期会很被动。",
+        text: `检查清单：\n- 图片/字体/音效/动效来源\n- 是否可商用/是否需要署名\n- 是否可二次分发\n- 生成式素材的使用条款\n输出：一页授权记录表（来源/链接/授权类型/备注）。`
+      },
+      {
+        title: "分辨率与导出格式",
+        tags: ["分辨率","格式","导出"],
+        desc: "海报要清晰：尺寸、DPI与格式要对。",
+        text: `建议：\n- 屏幕发布：PNG/WebP，按平台尺寸导出\n- 印刷：PDF/CMYK（按印刷厂要求）\n- 底图：至少长边 3000px（视场景）\n检查：二维码可扫、文字不糊、边缘不锯齿。`
+      },
+      {
+        title: "压缩与发布（减体积）",
+        tags: ["压缩","发布","体积"],
+        desc: "同样清晰，体积更小，加载更快。",
+        text: `流程：\n1) 先导出原图（PNG/JPG）\n2) 再压缩：TinyPNG/Squoosh\n3) 如需Web：转WebP/AVIF\n4) 对比清晰度：放大200%看边缘\n输出：发布版图包（含尺寸说明）。`
+      },
+      {
+        title: "素材结构（项目归档）",
+        tags: ["结构","归档","协作"],
+        desc: "让多人协作不打架。",
+        text: `建议结构：\n- 00_brief\n- 01_assets（图/字/贴图）\n- 02_work（源文件）\n- 03_export（发布图）\n- 04_archive（历史版本）\n每个文件名包含：主题_尺寸_版本_日期。`
+      },
+      {
+        title: "复用模板（下一次更快）",
+        tags: ["模板","复用","系统"],
+        desc: "把常用版式做成模板库。",
+        text: `建议：\n- 做3套常用版式：强标题/强图/信息密集\n- 固定：栅格、字号、行距、间距\n- 变量：主视觉、色板、文案\n输出：模板文件 + 使用说明。`
+      }
+    ];
+
+    const layoutCards = [
+      {
+        title: "强标题版式（标题即结论）",
+        tags: ["强标题","留白","高对比"],
+        desc: "适合课程、发布会、促销活动：标题压住全场。",
+        text: `结构：\n- 标题：占上半屏（两行以内）\n- 副标题：一行补信息\n- 焦点元素：小而精（角标/符号/纹理）\n- 信息区：底部一条（时间/地点/CTA）\n建议：高对比 + 大留白 + 简洁背景。`
+      },
+      {
+        title: "强图版式（焦点物体）",
+        tags: ["强图","主视觉","构图"],
+        desc: "适合新品/展览：一个主物体+干净信息区。",
+        text: `结构：\n- 主视觉：占画面60-75%\n- 标题：靠边放（避免压在主体细节上）\n- 信息区：统一栅格（3-5项信息）\n建议：留白给排版，主体边缘干净。`
+      },
+      {
+        title: "信息密集版式（分区栅格）",
+        tags: ["信息","栅格","清晰"],
+        desc: "适合大会/议程：信息多但必须清楚。",
+        text: `结构：\n- 标题区：1行标题+副标题\n- 栅格区：2-3列信息（议程/讲师/报名）\n- CTA：固定角落\n建议：统一对齐、统一间距、统一图标风格。`
+      },
+      {
+        title: "双栏版式（左文右图）",
+        tags: ["双栏","节奏","可读"],
+        desc: "适合品牌活动：信息与主视觉平衡。",
+        text: `结构：\n- 左侧：标题/卖点/信息\n- 右侧：主视觉或插画\n- 底部：二维码/CTA\n建议：左右留白一致；强调一处高亮色。`
+      },
+      {
+        title: "卡片堆叠版式（模块化）",
+        tags: ["卡片","模块","复用"],
+        desc: "适合系列活动：组件复用，换内容即可。",
+        text: `结构：\n- 顶部：标题条\n- 中部：2-4张卡片（卖点/权益/日程）\n- 底部：CTA\n建议：卡片圆角/阴影统一；背景做轻纹理。`
+      },
+      {
+        title: "极简版式（白底高级感）",
+        tags: ["极简","高级","留白"],
+        desc: "适合展览/品牌发布：少即是多。",
+        text: `结构：\n- 标题：居中或左上\n- 元素：1个符号或小图形\n- 信息：底部细字\n建议：字体选择与字距非常关键；避免过多装饰。`
+      }
+    ];
+
+    const state = { activeCat: "全部", q: "", favOnly: false, favs: new Set() };
+    const els = {
+      q: document.getElementById("q"),
+      recommendGrid: document.getElementById("recommendGrid"),
+      recommendDesc: document.getElementById("recommendDesc"),
+      recommendHint: document.getElementById("recommendHint"),
+      tabs: document.getElementById("tabs"),
+      catQuick: document.getElementById("catQuick"),
+      grid: document.getElementById("grid"),
+      tmplGrid: document.getElementById("tmplGrid"),
+      sopGrid: document.getElementById("sopGrid"),
+      assetGrid: document.getElementById("assetGrid"),
+      layoutGrid: document.getElementById("layoutGrid"),
+      activeCat: document.getElementById("activeCat"),
+      count: document.getElementById("count"),
+      catCount: document.getElementById("catCount"),
+      toolCount: document.getElementById("toolCount"),
+      favCount: document.getElementById("favCount"),
+      showFavs: document.getElementById("showFavs"),
+      year: document.getElementById("year"),
+      toast: document.getElementById("toast"),
+      fabTop: document.getElementById("fabTop"),
+      submitTool: document.getElementById("submitTool"),
+      openDisclaimer: document.getElementById("openDisclaimer"),
+      openPrivacy: document.getElementById("openPrivacy"),
+      quickTools: document.getElementById("quickTools")
+    };
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function normalize(s){return (s||"").toLowerCase().trim()}
+    function toast(msg){
+      els.toast.textContent=msg;
+      els.toast.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t=setTimeout(()=>els.toast.classList.remove("show"),1600);
+    }
+    function track(node){
+      const ev=node?.dataset?.event;
+      if(!ev) return;
+      window.__events=window.__events||[];
+      window.__events.push({event:ev,ts:Date.now()});
+    }
+    function getCategories(items){const set=new Set(items.map(x=>x.cat));return ["全部",...Array.from(set).sort((a,b)=>a.localeCompare(b,"zh-Hans-CN"))]}
+    function matchesQuery(item,q){if(!q) return true;const hay=[item.name,item.desc,item.cat,...(item.tags||[])].join(" ").toLowerCase();return hay.includes(q)}
+    function shouldShow(item){if(state.activeCat!=="全部"&&item.cat!==state.activeCat) return false;if(state.favOnly&&!state.favs.has(item.name)) return false;if(!matchesQuery(item,state.q)) return false;return true}
+
+    function saveFavs(){localStorage.setItem(LS_KEY,JSON.stringify(Array.from(state.favs)));updateCounts()}
+    function loadFavs(){try{const raw=localStorage.getItem(LS_KEY);if(!raw) return;const arr=JSON.parse(raw);if(Array.isArray(arr)) state.favs=new Set(arr)}catch(_){}} 
+    function loadRecents(){try{const raw=localStorage.getItem(REC_KEY);if(!raw) return [];const arr=JSON.parse(raw);return Array.isArray(arr)?arr.filter(Boolean):[]}catch(_){return []}}
+    function saveRecents(list){try{localStorage.setItem(REC_KEY,JSON.stringify(list.slice(0,12)))}catch(_){}} 
+    function pushRecent(name){if(!name) return;const list=loadRecents();const next=[name,...list.filter(x=>x!==name)].slice(0,12);saveRecents(next)}
+
+    function iconSvg(cat){
+      const common={
+        "主视觉/出图":`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Z" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" fill="currentColor" opacity=".9"/><path d="M4 16l4-4 4 4 3-3 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        "后期/合成":`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h6v6H4V7Z" stroke="currentColor" stroke-width="2"/><path d="M14 11h6v6h-6v-6Z" stroke="currentColor" stroke-width="2"/><path d="M10 10h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+        "排版/布局":`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h14v16H5V4Z" stroke="currentColor" stroke-width="2"/><path d="M8 8h8M8 12h8M8 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+        "字体/配色":`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 20 12 6l5 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        "素材/图库":`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="2"/><path d="M7 10h10M7 14h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+        "灵感/案例":`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a8 8 0 1 0-8-8c0 2.9 1.6 5.5 4 6.9" stroke="currentColor" stroke-width="2"/><path d="M12 7v6l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`
+      };
+      return common[cat]||`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="2"/><path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+    }
+
+    function toolIconSvg(name){
+      const map={
+        "Midjourney": iconSvg("主视觉/出图"),
+        "Ideogram": iconSvg("主视觉/出图"),
+        "DALL·E": iconSvg("主视觉/出图"),
+        "Stable Diffusion WebUI": iconSvg("主视觉/出图"),
+        "ComfyUI": iconSvg("主视觉/出图"),
+        "Leonardo AI": iconSvg("主视觉/出图"),
+        "Adobe Photoshop": iconSvg("后期/合成"),
+        "Photopea": iconSvg("后期/合成"),
+        "Pixlr": iconSvg("后期/合成"),
+        "Remove.bg": iconSvg("后期/合成"),
+        "Canva": iconSvg("排版/布局"),
+        "Figma": iconSvg("排版/布局"),
+        "Kittl": iconSvg("排版/布局"),
+        "Adobe Illustrator": iconSvg("排版/布局"),
+        "Coolors": iconSvg("字体/配色"),
+        "Adobe Color": iconSvg("字体/配色"),
+        "Google Fonts": iconSvg("字体/配色"),
+        "Fontshare": iconSvg("字体/配色"),
+        "Unsplash": iconSvg("素材/图库"),
+        "Pexels": iconSvg("素材/图库"),
+        "Freepik": iconSvg("素材/图库"),
+        "Flaticon": iconSvg("素材/图库"),
+        "Iconify": iconSvg("素材/图库"),
+        "Behance": iconSvg("灵感/案例"),
+        "Pinterest": iconSvg("灵感/案例"),
+        "Dribbble": iconSvg("灵感/案例"),
+        "Awwwards": iconSvg("灵感/案例")
+      };
+      return map[name]||iconSvg("排版/布局");
+    }
+
+    function toolIconHtml(tool){
+      if(tool?.icon){
+        return `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-icon-name="${escapeHtml(tool.name)}" />`;
+      }
+      return toolIconSvg(tool?.name || "");
+    }
+
+    function attachIconFallback(root){
+      if(!root) return;
+      root.querySelectorAll('img[data-icon-name]').forEach(img => {
+        img.addEventListener("error", () => {
+          const name = img.getAttribute("data-icon-name") || "";
+          const wrap = img.parentElement;
+          if(!wrap) return;
+          wrap.innerHTML = toolIconSvg(name);
+        }, { once: true });
+      });
+    }
+
+    function updateCounts(filtered){
+      const categories=getCategories(tools);
+      els.catCount.textContent=String(Math.max(0,categories.length-1));
+      els.toolCount.textContent=String(tools.length);
+      els.favCount.textContent=String(state.favs.size);
+      if(typeof filtered==="number") els.count.textContent=String(filtered);
+      els.activeCat.textContent=state.activeCat;
+    }
+
+    async function copyText(text){
+      try{await navigator.clipboard.writeText(text);toast("已复制");}
+      catch(_){
+        const ta=document.createElement("textarea");
+        ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";
+        document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();
+        toast("已复制");
+      }
+    }
+
+    function renderCards(list, root, evPrefix){
+      if(!root) return;
+      root.innerHTML=list.map((x)=>`
+        <article class="tmpl-card">
+          <h3 class="tmpl-title">${escapeHtml(x.title)}</h3>
+          <p class="tmpl-desc">${escapeHtml(x.desc)}</p>
+          <div class="tags">${(x.tags||[]).slice(0,4).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join("")}</div>
+          <div class="tmpl-actions">
+            <button class="mini primary" type="button" data-copy="${escapeHtml(x.text)}" data-event="${evPrefix}_copy">复制模板</button>
+            <button class="mini" type="button" data-fill="${escapeHtml(x.title)}" data-event="${evPrefix}_use">用于搜索</button>
+          </div>
+        </article>
+      `).join("");
+      root.querySelectorAll("[data-copy]").forEach(btn=>{btn.addEventListener("click",(e)=>{track(e.currentTarget);const text=e.currentTarget.getAttribute("data-copy")||"";copyText(text)})});
+      root.querySelectorAll("[data-fill]").forEach(btn=>{btn.addEventListener("click",(e)=>{track(e.currentTarget);const q=e.currentTarget.getAttribute("data-fill")||"";els.q.value=q;state.q=normalize(q);renderGrid();toast("已填入搜索框")})});
+    }
+
+    function renderQuickTools(){
+      if(!els.quickTools) return;
+      els.quickTools.innerHTML=quickTools.map(x=>`
+        <button class="quick-tool" type="button" data-qt="1" data-cat="${escapeHtml(x.cat)}" data-q="${escapeHtml(x.q)}" data-event="des2_quick_${escapeHtml(x.name)}" aria-label="${escapeHtml(x.name)}">
+          <span class="qt-ico">${iconSvg(x.cat)}</span>
+          <span class="qt-name">${escapeHtml(x.name)}</span>
+        </button>
+      `).join("");
+      els.quickTools.addEventListener("click",(e)=>{
+        const btn=e.target.closest("[data-qt]");if(!btn) return;
+        track(btn);
+        const cat=btn.getAttribute("data-cat")||"";
+        const q=btn.getAttribute("data-q")||"";
+        if(cat) state.activeCat=cat;
+        if(typeof q==="string"){state.q=normalize(q);els.q.value=q;}
+        renderTabs();renderCatQuick();renderGrid();toast("已应用快捷筛选");
+      });
+    }
+
+    function renderTabs(){
+      const categories=getCategories(tools);
+      els.tabs.innerHTML=categories.map(cat=>{
+        const active=cat===state.activeCat?"active":"";
+        return `<button class="tab ${active}" type="button" role="tab" aria-selected="${active?"true":"false"}" data-cat="${escapeHtml(cat)}" data-event="des2_tab_${escapeHtml(cat)}">${escapeHtml(cat)}</button>`;
+      }).join("");
+    }
+
+    function renderCatQuick(){
+      if(!els.catQuick) return;
+      const categories=getCategories(tools).filter(x=>x!=="全部");
+      const list=categories.slice(0,16);
+      els.catQuick.innerHTML=list.map(cat=>{
+        const active=cat===state.activeCat?"active":"";
+        return `<button class="cat-btn ${active}" type="button" data-cat="${escapeHtml(cat)}" data-event="des2_cat_${escapeHtml(cat)}" aria-label="${escapeHtml(cat)}"><span class="cat-ico">${iconSvg(cat)}</span><span class="cat-name">${escapeHtml(cat)}</span></button>`;
+      }).join("");
+    }
+
+    function renderRecommend(mode){
+      const prefer=["Midjourney","Ideogram","Canva","Figma","Adobe Photoshop","Coolors","Google Fonts","Unsplash","Freepik","Remove.bg","Behance","Pinterest"];
+      let list=[];
+      if(mode==="recent"){
+        const recentNames=loadRecents();
+        list=recentNames.map(n=>tools.find(t=>t.name===n)).filter(Boolean);
+        els.recommendDesc.textContent="你最近点过的入口（本地记录，不上传）。";
+        els.recommendHint.textContent=list.length?"":"暂无最近使用记录。点击下方工具后，这里会出现。";
+      }else{
+        const picked=[];
+        for(const n of prefer){const t=tools.find(x=>x.name===n);if(t) picked.push(t);}
+        for(const t of tools){if(!picked.some(x=>x.name===t.name)) picked.push(t);}
+        list=picked.slice(0,12);
+        els.recommendDesc.textContent="海报高频入口（置顶）。更多工具在下方分类列表。";
+        els.recommendHint.textContent="";
+      }
+      els.recommendGrid.innerHTML=list.map(t=>`
+        <a class="rec-card" href="${escapeHtml(t.url)}" target="_blank" rel="noopener noreferrer" data-event="des2_rec_open_${escapeHtml(t.name)}" data-tool="${escapeHtml(t.name)}" aria-label="${escapeHtml(t.name)}">
+          <span class="rec-icon">${toolIconHtml(t)}</span>
+          <span class="rec-text"><span class="rec-name">${escapeHtml(t.name)}</span><span class="rec-sub">${escapeHtml(t.desc||"")}</span></span>
+        </a>
+      `).join("");
+      attachIconFallback(els.recommendGrid);
+      els.recommendGrid.querySelectorAll("a").forEach(a=>{a.addEventListener("click",(e)=>{track(e.currentTarget);const name=e.currentTarget.getAttribute("data-tool")||"";pushRecent(name)})});
+    }
+
+    function renderInlineAd(){
+      return `
+        <div class="inline-ad">
+          <div class="ad-slot" role="region" aria-label="信息流推荐">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <div style="font-weight:980">信息流推荐：1bgp.com 服务器</div>
+              <span class="badge">合作</span>
+            </div>
+            <div class="muted" style="margin-top:6px;font-size:12.5px;line-height:1.6">适合部署素材下载页、活动页、作品集与自动化任务；云/物理机可选，按需扩容。</div>
+            <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+              <a class="mini primary" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="des2_ad_feed_primary">查看配置</a>
+              <a class="mini" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="des2_ad_feed_secondary">进入官网</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderGrid(){
+      const list=tools.filter(shouldShow);
+      updateCounts(list.length);
+      if(list.length===0){
+        els.grid.innerHTML=`<div class="card" style="grid-column:1 / -1"><div class="card-title">没有匹配结果</div><p class="card-desc">试试切换分类、精简关键词，或关闭“仅看收藏”。</p><div class="card-actions"><button class="mini primary" type="button" id="resetFilters" data-event="des2_reset_filters">重置筛选</button><a class="mini" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="des2_cta_from_empty">看看部署方案</a></div></div>`;
+        document.getElementById("resetFilters").addEventListener("click",(e)=>{track(e.currentTarget);state.activeCat="全部";state.q="";state.favOnly=false;els.q.value="";els.showFavs.textContent="仅看收藏";renderTabs();renderCatQuick();renderGrid();toast("已重置")});
+        return;
+      }
+      const nodes=[];const insertAt=Math.min(8,list.length);
+      list.forEach((item,idx)=>{
+        if(idx===insertAt) nodes.push(renderInlineAd());
+        const fav=state.favs.has(item.name);
+        nodes.push(`<article class="card" data-name="${escapeHtml(item.name)}" data-cat="${escapeHtml(item.cat)}"><div class="card-head"><div><h3 class="card-title">${escapeHtml(item.name)}</h3><p class="card-desc">${escapeHtml(item.desc)}</p></div><button class="star" type="button" aria-label="收藏" aria-pressed="${fav?"true":"false"}" data-fav="${escapeHtml(item.name)}" data-event="des2_fav_toggle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 17.3 6.2 20.6l1.1-6.6L2.6 9.7l6.6-1 2.8-6 2.8 6 6.6 1-4.7 4.3 1.1 6.6L12 17.3Z" stroke="currentColor" stroke-width="2" opacity="${fav?"1":".7"}" fill="${fav?"rgba(163,230,53,.14)":"transparent"}"/></svg></button></div><div class="tags"><span class="tag">${escapeHtml(item.cat)}</span>${(item.tags||[]).slice(0,3).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join("")}</div><div class="card-actions"><a class="mini primary" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-event="des2_tool_open" data-tool="${escapeHtml(item.name)}">打开</a><button class="mini" type="button" data-event="des2_tool_copy" data-copy="${escapeHtml(item.name)}｜${escapeHtml(item.url)}">复制链接</button></div></article>`);
+      });
+      els.grid.innerHTML=nodes.join("");
+      els.grid.querySelectorAll("[data-fav]").forEach(btn=>{btn.addEventListener("click",(e)=>{track(e.currentTarget);const name=e.currentTarget.getAttribute("data-fav");if(!name) return;if(state.favs.has(name)) state.favs.delete(name); else state.favs.add(name);saveFavs();renderGrid();toast(state.favs.has(name)?"已收藏":"已取消")})});
+      els.grid.querySelectorAll("[data-copy]").forEach(btn=>{btn.addEventListener("click",(e)=>{track(e.currentTarget);const text=e.currentTarget.getAttribute("data-copy")||"";copyText(text)})});
+      els.grid.querySelectorAll('a[data-event="des2_tool_open"]').forEach(a=>{a.addEventListener("click",(e)=>{track(e.currentTarget);const name=e.currentTarget.getAttribute("data-tool")||"";pushRecent(name)})});
+      els.grid.querySelectorAll('[data-event^="des2_ad_"]').forEach(a=>{a.addEventListener("click",(e)=>track(e.currentTarget))});
+    }
+
+    function setActiveCat(cat){state.activeCat=cat;renderTabs();renderCatQuick();renderGrid()}
+
+    function init(){
+      loadFavs();
+      els.year.textContent=String(new Date().getFullYear());
+      renderQuickTools();
+      renderRecommend("recommend");
+      renderTabs();
+      renderCatQuick();
+      renderCards(promptCards, els.tmplGrid, "des2_prompt");
+      renderCards(sopCards, els.sopGrid, "des2_sop");
+      renderCards(assetCards, els.assetGrid, "des2_asset");
+      renderCards(layoutCards, els.layoutGrid, "des2_layout");
+      renderGrid();
+      updateCounts(tools.length);
+
+      const recTabs=document.querySelectorAll("[data-rec]");
+      recTabs.forEach(btn=>{btn.addEventListener("click",(e)=>{track(e.currentTarget);const mode=e.currentTarget.getAttribute("data-rec")||"recommend";recTabs.forEach(x=>{const active=x===e.currentTarget;x.classList.toggle("active",active);x.setAttribute("aria-selected",active?"true":"false")});renderRecommend(mode)})});
+
+      els.q.addEventListener("input",()=>{state.q=normalize(els.q.value);renderGrid()});
+      els.tabs.addEventListener("click",(e)=>{const btn=e.target.closest("[data-cat]");if(!btn) return;track(btn);const cat=btn.getAttribute("data-cat");if(!cat) return;setActiveCat(cat)});
+      if(els.catQuick){els.catQuick.addEventListener("click",(e)=>{const btn=e.target.closest("[data-cat]");if(!btn) return;track(btn);const cat=btn.getAttribute("data-cat");if(!cat) return;setActiveCat(cat)})}
+      els.showFavs.addEventListener("click",(e)=>{track(e.currentTarget);state.favOnly=!state.favOnly;els.showFavs.textContent=state.favOnly?"查看全部":"仅看收藏";renderGrid();toast(state.favOnly?"仅显示收藏":"显示全部")});
+      els.fabTop.addEventListener("click",(e)=>{track(e.currentTarget);window.scrollTo({top:0,behavior:"smooth"})});
+      els.submitTool.addEventListener("click",(e)=>{track(e.currentTarget);window.open("https://www.1bgp.com/","_blank","noopener,noreferrer")});
+      els.openDisclaimer.addEventListener("click",(e)=>{e.preventDefault();track(e.currentTarget);toast("使用说明：本站为海报设计工具入口整理，内容仅供参考，请自行判断版权授权。")});
+      els.openPrivacy.addEventListener("click",(e)=>{e.preventDefault();track(e.currentTarget);toast("隐私说明：收藏/最近使用仅保存在你的浏览器本地，不会上传。")});
+    }
+
+    init();
+  </script>
+</body>
+</html>
